@@ -1,12 +1,11 @@
-# Opgave
+# Opgave 01 - Thermometer Deel 1
 
-## Exception werpen en opvangen in de UI-laag
+## Exceptions werpen en opvangen in de UI-laag
 
 ![UML Diagram](images/uml.png)
 
 Vervolledig de consoleapplicatie in de klasse `ThermometerApplicatie` die een temperatuur in **Fahrenheit** opvraagt,
-omzet in een
-temperatuur in **Celsius** en het resultaat toont.
+omzet in een temperatuur in **Celsius** en het resultaat toont.
 
 Gebruik de gegeven domeinklasse `Thermometer` om de temperatuur om te zetten! De volgende formule is er reeds
 geïmplementeerd:
@@ -22,7 +21,7 @@ Handel alle fouten meteen (in `ThermometerApplicatie`) af!
 Respecteer de bovenstaande UML en gebruik dus ook de `DomeinController`-klasse als doorgeefluik tussen de UI en het
 domein. De applicatie kan gestart worden via de klasse `StartUp` uit de package `main`.
 
-### Verwachte uitvoer:
+### Verwachte uitvoer
 
 ```text
 Geef een gehele temperatuur in °F uit het interval [14,104]: blabla

@@ -1,4 +1,4 @@
-# Opgave
+# Opgave 04 - Thermometer deel 4
 
 ## Een eigen Exception klasse schrijven
 
@@ -10,7 +10,7 @@
 * zorg dat alle unit testen slagen
 * pas de `ThermometerApplicatie` aan om expliciet dit soort exceptions op te vangen.
 
-### Verwachte uitvoer:
+### Voorbeeld uitvoer (ongewijzigd):
 
 ```text
 Geef een gehele temperatuur in °F uit het interval [14,104]: blabla
@@ -21,3 +21,4 @@ Geef een gehele temperatuur in °F uit het interval [14,104]: 10
 Waarde van temperatuur moet uit het interval [14,104] komen!
 Geef een gehele temperatuur in °F uit het interval [14,104]: 20
 De temperatuur in °C is -6
+```

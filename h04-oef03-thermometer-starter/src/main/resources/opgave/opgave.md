@@ -1,6 +1,4 @@
-# Opgave
-
-# Opgave
+# Opgave 03 - Thermometer Deel 3
 
 ## Alle fouten die in de domein-laag geworpen worden opvangen in de UI-laag
 
