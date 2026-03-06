@@ -7,7 +7,7 @@
 * schrijf je eigen exception klasse `BuitenBereikException` volgens de gegeven UML.
   De klasse erft van `IllegalArgumentException`.
 * werp een instantie van deze exception indien iets misloopt in de setter `setAantalGraden` in de klasse `Thermometer`.
-* zorg dat alle unit testen slagen
+* zorg dat alle **unit testen** slagen
 * pas de `ThermometerApplicatie` aan om expliciet dit soort exceptions op te vangen.
 
 ### Voorbeeld uitvoer (ongewijzigd):

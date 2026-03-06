@@ -25,7 +25,6 @@ public class Thermometer {
     }
 
     public void stelAantalGradenIn(String invoer) {
-        int graden = Integer.parseInt(invoer);
-        setAantalGraden(graden);
+
     }
 }

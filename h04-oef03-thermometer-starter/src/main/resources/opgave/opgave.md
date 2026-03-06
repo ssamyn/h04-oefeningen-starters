@@ -6,7 +6,7 @@
   Maak gebruik van `Integer.parseInt` om deze `String` om te zetten naar `int`.
   Roep de private setter aan met de verkregen waarde om effectief
   het aantal graden in te stellen.
-* Zorg dat alle unit testen slagen.
+* Zorg dat alle **unit testen** slagen.
 
 
 * Bekijk de `ThermometerApplicatie` die werd overgenomen uit vorige oefening.

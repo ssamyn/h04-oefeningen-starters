@@ -11,7 +11,7 @@ In deel 1 werd de domeinregel niet geïmplementeerd in de domein-laag...
     * de temperatuur van een thermometer moet ten aller tijde in het interval **[14, 104]** liggen.
     * werp een `IllegalArgumentException` indien niet aan de domeinregel is voldaan.
     * maak gebruik van de gegeven constanten
-    * zorg dat alle unit testen slagen
+    * zorg dat alle **unit testen** slagen
 
 
 * Pas de klasse `ThermometerApplicatie` aan
