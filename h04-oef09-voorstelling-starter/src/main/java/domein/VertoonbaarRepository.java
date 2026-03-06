@@ -1,6 +1,6 @@
 package domein;
 
-import exceptions.LegeStringException;
+
 import persistentie.VertoonbaarMapper;
 
 import java.util.List;
@@ -9,7 +9,7 @@ public class VertoonbaarRepository {
     private final VertoonbaarMapper vm;
     private List<Vertoonbaar> voorstellingen;
 
-    public VertoonbaarRepository() throws LegeStringException {
+    public VertoonbaarRepository() {
         vm = new VertoonbaarMapper();
         voorstellingen = vm.geefAlleVoorstellingen();
     }

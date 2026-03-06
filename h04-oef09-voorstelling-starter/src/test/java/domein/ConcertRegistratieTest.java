@@ -1,6 +1,5 @@
 package domein;
 
-import exceptions.LegeStringException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ public class ConcertRegistratieTest {
     private static final String GELDIGE_NAAM = "Taylor's version - The Las Vegas Show - december 2021";
 
     @BeforeEach
-    public void setUp() throws LegeStringException {
+    public void setUp() {
         cr = new ConcertRegistratie(GELDIGE_ARTIEST, GELDIGE_NAAM);
     }
 
@@ -28,14 +27,14 @@ public class ConcertRegistratieTest {
     @NullAndEmptySource
     @ValueSource(strings = {" ", "   ", "\t\t", "\n", "\n  \t \t  \n"})
     public void maakConcertRegistratie_ongeldigeArtiest_werptException(String artiest) {
-        Assertions.assertThrows(LegeStringException.class, () -> new ConcertRegistratie(artiest, GELDIGE_NAAM));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new ConcertRegistratie(artiest, GELDIGE_NAAM));
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "   ", "\t\t", "\n", "\n  \t \t  \n"})
     public void maakConcertRegistratie_ongeldigeConcertNaam_werptException(String concertNaam) {
-        Assertions.assertThrows(LegeStringException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new ConcertRegistratie(GELDIGE_ARTIEST, concertNaam));
     }
 }

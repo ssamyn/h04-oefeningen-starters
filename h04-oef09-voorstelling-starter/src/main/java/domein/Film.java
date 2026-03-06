@@ -1,7 +1,5 @@
 package domein;
 
-import exceptions.LegeStringException;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +13,7 @@ public class Film implements Vertoonbaar {
     public static final int MAX_STERREN = 5;
     public static final int MIN_JAAR = 1900;
 
-    public Film(String naam, int sterren, int jaar) throws LegeStringException {
+    public Film(String naam, int sterren, int jaar) {
         setNaam(naam);
         setSterren(sterren);
         setJaar(jaar);
@@ -42,9 +40,9 @@ public class Film implements Vertoonbaar {
         return naam;
     }
 
-    private void setNaam(String naam) throws LegeStringException {
+    private void setNaam(String naam) {
         if (naam == null || naam.isBlank())
-            throw new LegeStringException("naam van de film mag niet leeg zijn.");
+            throw new IllegalArgumentException("naam van de film mag niet leeg zijn.");
         this.naam = naam;
     }
 

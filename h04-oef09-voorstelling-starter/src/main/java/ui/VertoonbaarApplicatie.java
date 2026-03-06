@@ -1,13 +1,11 @@
 package ui;
 
 import domein.DomeinController;
-import exceptions.LegeStringException;
 import util.Actie;
 
 import java.util.Scanner;
 
 public class VertoonbaarApplicatie {
-
     private final DomeinController dc;
     private final Scanner invoer = new Scanner(System.in);
 
@@ -28,9 +26,10 @@ public class VertoonbaarApplicatie {
     }
 
     private void drukOverzichtVoorstellingenAf() {
-        System.out.println("\nOverzicht voorstellingen:");
+        System.out.println("Overzicht voorstellingen:");
         for (String voorstelling : dc.geefAlleVoorstellingen())
             System.out.printf("- %s%n", voorstelling);
+        System.out.printf("%n%n");
     }
 
     private void voegVoorstellingToe() {
@@ -43,16 +42,10 @@ public class VertoonbaarApplicatie {
                 return;
             }
         }
-        try {
-            dc.voegVoorstellingToe(gegevens);
-            System.out.println("Voorstelling toegevoegd...");
-        } catch (NumberFormatException e) {
-            System.out.println("Voorstelling werd niet geregistreerd: aantal sterren en jaar moeten een geheel getal zijn");
-        } catch (LegeStringException | IllegalArgumentException e) {
-            System.out.println("Voorstelling werd niet geregistreerd: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Onverwachte fout! De voorstelling kon niet geregistreerd worden");
-        }
+
+        dc.voegVoorstellingToe(gegevens);
+        System.out.println("Voorstelling toegevoegd...\n");
+
     }
 
     private String[] geefGegevensVanFilm() {
@@ -76,11 +69,11 @@ public class VertoonbaarApplicatie {
     private void toonAantalVoorstellingenInZaal() {
         int keuze = geefKeuze(Actie.ZAAL);
         if (keuze != Actie.ZAAL.getKeuzes().length)
-            System.out.printf("Het aantal voorstellingen in deze zaal bedraagt %d%n",
+            System.out.printf("Het aantal voorstellingen in deze zaal bedraagt %d%n%n",
                     dc.geefAantalInZaal(keuze));
     }
 
     private int geefKeuze(Actie actie) {
-        return Menu.geefKeuze(actie.getTitel(), actie.getKeuzes());
+        return Menu.geefKeuzeUitMenu(actie.getTitel(), actie.getKeuzes());
     }
 }

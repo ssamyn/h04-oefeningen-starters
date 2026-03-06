@@ -1,34 +1,51 @@
-# Opgave 01 - Thermometer Deel 1
+# Opgave 01 - Thermometer (Deel 1)
 
 ## Exceptions werpen en opvangen in de UI-laag
 
 ![UML Diagram](images/uml.png)
 
-Vervolledig de consoleapplicatie in de klasse `ThermometerApplicatie` die een temperatuur in **Fahrenheit** opvraagt,
-omzet in een temperatuur in **Celsius** en het resultaat toont.
+### Beschrijving
 
-Gebruik de gegeven domeinklasse `Thermometer` om de temperatuur om te zetten! De volgende formule is er reeds
-geïmplementeerd:
+Vervolledig de consoleapplicatie in de klasse `ThermometerApplicatie`. De applicatie moet een temperatuur in *
+*Fahrenheit** opvragen, deze omzetten naar **Celsius** en het resultaat aan de gebruiker tonen.
+
+### Domeinlogica en Architectuur
+
+Gebruik de meegeleverde domeinklasse `Thermometer` voor de berekening. De conversieformule is als volgt geïmplementeerd:
 
 $$°C = \frac{5}{9} \times (°F - 32)$$
 
-De parameterloze constructor maakt een thermometer aan waarbij de starttemperatuur ingesteld is op **32 °F**.
+**Beschrijving gegeven applicatie:**
 
-Zorg ervoor dat een foutieve input (= niet numeriek of buiten de grenzen van het interval **[14 °F, 104 °F]**) wordt
-gemeld.
-Handel alle fouten meteen (in `ThermometerApplicatie`) af!
+* **Constructor:** De parameterloze constructor stelt de starttemperatuur in op **32 °F**.
+* **Gelaagde structuur:** Respecteer het UML-diagram. Gebruik de klasse `DomeinController` als noodzakelijk doorgeefluik
+  tussen de UI (`ThermometerApplicatie`) en het domein (`Thermometer`).
+* **Entry point:** De applicatie wordt gestart via de klasse `StartUp` in de package `main`.
 
-Respecteer de bovenstaande UML en gebruik dus ook de `DomeinController`-klasse als doorgeefluik tussen de UI en het
-domein. De applicatie kan gestart worden via de klasse `StartUp` uit de package `main`.
+### Validatie en Exception Handling
 
-### Verwachte uitvoer
+Zorg voor een robuuste foutafhandeling in de **UI-laag** (`ThermometerApplicatie`). De applicatie mag niet crashen bij
+foutieve invoer.
+
+1. **Niet-numerieke invoer:** Vang fouten op wanneer de gebruiker tekst invoert in plaats van een getal.
+2. **Bereikcontrole:** De invoer moet binnen het gesloten interval **[14 °F, 104 °F]** liggen.
+3. **Afhandeling:** Alle exceptions moeten direct in `ThermometerApplicatie` worden afgehandeld met een duidelijke
+   foutmelding naar de gebruiker.
+
+---
+
+### Verwachte Uitvoer
 
 ```text
 Geef een gehele temperatuur in °F uit het interval [14,104]: blabla
 De invoer moet een geheel getal zijn!
+
 Geef een gehele temperatuur in °F uit het interval [14,104]: 500
 Waarde van temperatuur moet uit het interval [14,104] komen!
+
 Geef een gehele temperatuur in °F uit het interval [14,104]: 10
 Waarde van temperatuur moet uit het interval [14,104] komen!
+
 Geef een gehele temperatuur in °F uit het interval [14,104]: 20
 De temperatuur in °C is -6
+```

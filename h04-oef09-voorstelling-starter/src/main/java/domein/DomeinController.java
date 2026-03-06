@@ -1,18 +1,16 @@
 package domein;
 
-import exceptions.LegeStringException;
-
 import java.util.List;
 
 public class DomeinController {
 
     private final VertoonbaarRepository vertoonbaarRepo;
 
-    public DomeinController() throws LegeStringException {
+    public DomeinController() {
         vertoonbaarRepo = new VertoonbaarRepository();
     }
 
-    public void voegVoorstellingToe(String[] infoVoorstelling) throws LegeStringException {
+    public void voegVoorstellingToe(String[] infoVoorstelling) {
         boolean isFilm = infoVoorstelling.length == 3;
         if (isFilm) {
             String naam = infoVoorstelling[0];

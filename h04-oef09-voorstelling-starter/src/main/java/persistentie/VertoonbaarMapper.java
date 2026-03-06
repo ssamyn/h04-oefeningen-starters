@@ -3,14 +3,13 @@ package persistentie;
 import domein.ConcertRegistratie;
 import domein.Film;
 import domein.Vertoonbaar;
-import exceptions.LegeStringException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VertoonbaarMapper {
 
-    public List<Vertoonbaar> geefAlleVoorstellingen() throws LegeStringException {
+    public List<Vertoonbaar> geefAlleVoorstellingen() {
 
         List<Vertoonbaar> voorstellingen = new ArrayList<>();
 

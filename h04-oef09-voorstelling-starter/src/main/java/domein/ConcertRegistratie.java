@@ -1,21 +1,19 @@
 package domein;
 
-import exceptions.LegeStringException;
-
 public class ConcertRegistratie implements Vertoonbaar {
     private final String artiest;
     private final String concertNaam;
 
-    public ConcertRegistratie(String artiest, String concertNaam) throws LegeStringException {
+    public ConcertRegistratie(String artiest, String concertNaam) {
         controleerIngevuld(artiest);
         controleerIngevuld(concertNaam);
         this.artiest = artiest;
         this.concertNaam = concertNaam;
     }
 
-    private void controleerIngevuld(String tekst) throws LegeStringException {
+    private void controleerIngevuld(String tekst) {
         if (tekst == null || tekst.isBlank())
-            throw new LegeStringException();
+            throw new IllegalArgumentException();
     }
 
     public String getArtiest() {

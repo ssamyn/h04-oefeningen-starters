@@ -1,6 +1,5 @@
 package domein;
 
-import exceptions.LegeStringException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +15,7 @@ class FilmTest {
     private static final int MIN_JAAR = 1900;
 
     @Test
-    void maakFilm_allegegevensOk_maaktFilm() throws LegeStringException {
+    void maakFilm_allegegevensOk_maaktFilm() {
         String naam = "test";
         int jaar = 2005;
         int sterren = 4;
@@ -32,7 +31,7 @@ class FilmTest {
     @NullAndEmptySource
     @ValueSource(strings = {" ", "         ", "\t\t", "\n"})
     void maakFilm_legeNaam_werptException(String naam) {
-        Assertions.assertThrows(LegeStringException.class, () -> new Film(naam, 3, 2018));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Film(naam, 3, 2018));
     }
 
     @ParameterizedTest
@@ -71,7 +70,7 @@ class FilmTest {
 
 
     @Test
-    void equals_naamEnJaarGelijk_returnsTrue() throws LegeStringException {
+    void equals_naamEnJaarGelijk_returnsTrue() {
         Film f1 = new Film("naam", 3, 2018);
         Film f2 = new Film("naam", 1, 2018);
 
@@ -79,7 +78,7 @@ class FilmTest {
     }
 
     @Test
-    void equals_naamEnSterrenGelijk_returnsFalse() throws LegeStringException {
+    void equals_naamEnSterrenGelijk_returnsFalse() {
         Film f1 = new Film("naam", 1, 2018);
         Film f2 = new Film("naam", 1, 2016);
 
@@ -87,7 +86,7 @@ class FilmTest {
     }
 
     @Test
-    void equals_jaarEnSterrenGelijk_returnsFalse() throws LegeStringException {
+    void equals_jaarEnSterrenGelijk_returnsFalse() {
         Film f1 = new Film("naam1", 1, 2018);
         Film f2 = new Film("naam2", 1, 2018);
 

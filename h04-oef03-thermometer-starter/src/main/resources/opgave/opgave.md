@@ -10,7 +10,7 @@
 
 
 * Bekijk de `ThermometerApplicatie` die werd overgenomen uit vorige oefening.
-  Pas deze klasse, indien nodig aan.
+  Pas deze klasse, indien nodig, aan.
 
 ### Verwachte uitvoer:
 
