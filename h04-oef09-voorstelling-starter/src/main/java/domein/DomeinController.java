@@ -10,15 +10,12 @@ public class DomeinController {
         vertoonbaarRepo = new VertoonbaarRepository();
     }
 
-    public void voegVoorstellingToe(String[] infoVoorstelling) {
-        boolean isFilm = infoVoorstelling.length == 3;
-        if (isFilm) {
-            String naam = infoVoorstelling[0];
-            int sterren = Integer.parseInt(infoVoorstelling[1]);
-            int jaar = Integer.parseInt(infoVoorstelling[2]);
-            vertoonbaarRepo.voegVoorstellingToe(new Film(naam, sterren, jaar));
-        } else
-            vertoonbaarRepo.voegVoorstellingToe(new ConcertRegistratie(infoVoorstelling[0], infoVoorstelling[1]));
+    public void voegVoorstellingToe(String naam, int jaar, int sterren) {
+        vertoonbaarRepo.voegVoorstellingToe(new Film(naam, sterren, jaar));
+    }
+
+    public void voegVoorstellingToe(String artiest, String naam) {
+        vertoonbaarRepo.voegVoorstellingToe(new ConcertRegistratie(artiest, naam));
     }
 
     public String[] geefAlleVoorstellingen() {

@@ -4,64 +4,53 @@ import domein.Bestelling;
 import domein.DomeinController;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class BestellingApplicatie {
-    private static final String[] KEUZES = {"Nieuwe bestelling plaatsen", "Overzicht bestellingen tonen", "Stoppen"};
-    private Scanner invoer = new Scanner(System.in);
     private final DomeinController dc;
+    private final Menu menu;
 
     public BestellingApplicatie(DomeinController dc) {
         this.dc = dc;
+        this.menu = new Menu("BESTELLINGEN", new String[]{"Nieuwe bestelling plaatsen", "Overzicht bestellingen tonen", "Stoppen"});
     }
 
     public void start() {
-        System.out.println("HOGENT BESTELLINGEN\n");
+        System.out.println("HOGENT Bestellingen printers, scanner en laptops\n");
         int keuze;
         do {
-            keuze = Menu.geefKeuzeUitMenu("MENU", KEUZES);
+            keuze = menu.geefKeuzeUitMenu();
             switch (keuze) {
                 case 1 -> maakNieuweBestelling();
                 case 2 -> toonBestellingen();
-                case 3 -> System.out.println("Tot een volgende keer...");
             }
-            System.out.println();
         } while (keuze != 3);
+        System.out.println("Tot een volgende keer...");
     }
 
     private void toonBestellingen() {
         List<String> overzicht = dc.geefBestellingen();
         if (overzicht.isEmpty()) {
-            System.out.println("Er werden geen bestellingen gevonden.");
+            System.out.println("Er werden geen bestellingen gevonden.\n\n");
             return;
         }
         for (String bestelling : overzicht) {
-            System.out.println(bestelling);
+            System.out.printf("- %s%n", bestelling);
         }
+        System.out.printf("%n%n");
     }
 
     private void maakNieuweBestelling() {
         boolean bestellingOK = false;
         do {
-            // TODO validatie -> exceptions uit domein opvangen en afhandelen
-            int printers = vraagAantal("Geef aantal printers: ", Bestelling.MAX_PRINTERS);
-            int scanners = vraagAantal("Geef aantal scanners: ", Bestelling.MAX_SCANNERS);
-            int laptops = vraagAantal("Geef aantal laptops: ", Bestelling.MAX_LAPTOPS);
-            dc.voegBestellingToe(printers, laptops, scanners);
-            System.out.println("Je bestelling werd geplaatst...\n");
-            bestellingOK = true;
-        } while (!bestellingOK);
-    }
+            int printers = IO.geefGeheelGetal("Geef aantal printers", 0, Bestelling.MAX_PRINTERS);
+            int scanners = IO.geefGeheelGetal("Geef aantal scanners", 0, Bestelling.MAX_SCANNERS);
+            int laptops = IO.geefGeheelGetal("Geef aantal laptops", 0, Bestelling.MAX_LAPTOPS);
 
-    private int vraagAantal(String vraag, int maximum) {
-        int aantal = 0;
-        boolean invoerOK = false;
-        do {
-            // TODO validatie -> ongeldige invoer afhandelen
-            System.out.print(vraag);
-            aantal = Integer.parseInt(invoer.nextLine());
-            invoerOK = aantal >= 0 && aantal <= maximum;
-        } while (!invoerOK);
-        return aantal;
+            // TODO
+            dc.voegBestellingToe(printers, laptops, scanners);
+            System.out.println("✅ Je bestelling werd succesvol geplaatst...\n");
+            bestellingOK = true;
+
+        } while (!bestellingOK);
     }
 }

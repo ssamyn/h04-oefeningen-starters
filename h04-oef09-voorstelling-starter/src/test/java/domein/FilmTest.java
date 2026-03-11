@@ -8,6 +8,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class FilmTest {
     private final static int HUIDIG_JAAR = LocalDate.now().getYear();
     private static final int MIN_STERREN = 0;
@@ -15,7 +18,7 @@ class FilmTest {
     private static final int MIN_JAAR = 1900;
 
     @Test
-    void maakFilm_allegegevensOk_maaktFilm() {
+    void maakFilm_alleGegevensOk_maaktFilm() {
         String naam = "test";
         int jaar = 2005;
         int sterren = 4;
@@ -68,28 +71,24 @@ class FilmTest {
         Assertions.assertDoesNotThrow(() -> new Film("test", 3, jaar));
     }
 
-
     @Test
     void equals_naamEnJaarGelijk_returnsTrue() {
         Film f1 = new Film("naam", 3, 2018);
         Film f2 = new Film("naam", 1, 2018);
-
-        Assertions.assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
     }
 
     @Test
     void equals_naamEnSterrenGelijk_returnsFalse() {
         Film f1 = new Film("naam", 1, 2018);
         Film f2 = new Film("naam", 1, 2016);
-
-        Assertions.assertFalse(f1.equals(f2));
+        assertNotEquals(f1, f2);
     }
 
     @Test
     void equals_jaarEnSterrenGelijk_returnsFalse() {
         Film f1 = new Film("naam1", 1, 2018);
         Film f2 = new Film("naam2", 1, 2018);
-
-        Assertions.assertFalse(f1.equals(f2));
+        assertNotEquals(f1, f2);
     }
 }

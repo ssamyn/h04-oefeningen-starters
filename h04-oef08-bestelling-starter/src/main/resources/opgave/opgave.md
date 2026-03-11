@@ -1,14 +1,6 @@
 # Opgave 08 Bestelling
 
-<!---
-## Doelstelling
-
-Het aanleren van het onderscheid tussen **Checked Exceptions** (voorzienbare domeinfouten) en **Unchecked Exceptions
-** (
-programmeer- of invoerfouten) binnen een gelaagde architectuur.
--->
-
-## Robuust Bestelsysteem (Printers, Scanners & Laptops)
+## Robuust Bestelsysteem voor printers, scanners & laptops
 
 Ontwikkel een robuuste console-applicatie voor het beheren van bestellingen. De focus van deze oefening ligt op *
 *validatie in meerdere lagen** en het correct afhandelen van **custom exceptions**.
@@ -23,44 +15,84 @@ Een bestelling is alleen geldig als deze voldoet aan de volgende strikte kwantit
 | **Scanners** | Hoogstens 3    |
 | **Laptops**  | Hoogstens 2    |
 
-**Totaaloverzicht:** Een volledige bestelling moet minimaal **1** en maximaal **8** artikelen in totaal bevatten.
+**Totaaloverzicht:** Een volledige bestelling moet **minimaal 1** en **maximaal 8** artikelen in totaal bevatten.
 
-## 2. Foutafhandeling & Exception Strategie
+### 2. Foutafhandeling & Exception Strategie
 
 Implementeer een hiërarchie in foutmeldingen om de robuustheid te garanderen:
 
-* **BestellingException:** Maak deze klasse aan als subklasse van `Exception`. Werp deze enkel wanneer het **totaal
-  aantal artikelen** (som van alle types) minder dan 1 of meer dan 8 bedraagt.
-* **IllegalArgumentException:** Gebruik deze standaard Java-exception wanneer een individueel aantal (bijv. 5 printers)
-  de specifieke limiet overschrijdt.
-* **Menu-validatie:** Zorg dat de UI onmiddellijk reageert op ongeldige invoer (tekst in plaats
-  van cijfers, negatieve getallen of getallen buiten het bereik).
+1. **Een eigen exception klasse `BestellingException`**
 
-## 3. Architectuur: UI vs. Domein
-
-De validatie vindt plaats op twee niveaus:
-
-1. **De UI-laag**
-
-   1.1. **`Menu`**: Controleert de gemaakte menukeuze. Geeft directe feedback aan de gebruiker indien er sprake is van
-   ongeldige invoer (zoals tekst in plaats van cijfers of keuzes buiten het bereik).
-
-   1.2. **`BestellingApplicatie`**: Controleert direct de individuele aantallen per type. Dit zorgt voor snelle feedback
-   naar de gebruiker zonder onnodige communicatie met de domeinlaag.
+* Voeg in een package `exceptions` een klasse `BestellingException` toe.
+  Deze exception klasse erft van `Exception`.
+* Zorg ervoor dat een `BestellingException` kan geworpen worden met als
+  standaardboodschap "Ongeldige bestelling", maar ook met een zelf gekozen foutboodschap.
 
 2. **De Domein-laag (`Bestelling`)**
 
    2.1. **Validatie**: Voert een finale controle uit op zowel de individuele maxima per artikel als het algemene totaal.
-   Dit garandeert de integriteit van de data, ongeacht welke UI (bijv. een webinterface) later wordt gekoppeld.
-
-   2.2. **Opmerking**: De specifieke controle op het **totaal** (minimaal 1 en maximaal 8 artikelen) vindt uitsluitend
-   plaats binnen het domein.
+    * Werp een `IllegalArgumentException` indien een **individueel aantal** de limiet per type overschrijdt (gebruik dit
+      in de setters).
+    * Werp een `BestellingException` indien het **totaal aantal artikelen** (minimaal 1 en maximaal 8 artikelen) niet
+      geldig is (gebruik dit in
+      constructor)
 
    2.3 **Unit testen**: Zodra je de `BestellingException` hebt toegevoegd en je het domein robuust hebt gemaakt slagen
    alle unit testen!
 
-## 4. Klassenontwerp
+3. **De UI-laag**
 
-Baseer de implementatie op het onderstaande UML-diagram:
+   3.1. **`Menu`**: Controleert de gemaakte menukeuze. Geeft directe feedback aan de gebruiker indien er sprake is van
+   ongeldige invoer (zoals tekst in plaats van cijfers of keuzes buiten het bereik). Dit is reeds geïmplementeerd.
 
-![UML Diagram](images/uml.png)
+   3.2. **`BestellingApplicatie`**: Controleert direct de individuele aantallen per type. Dit zorgt voor snelle feedback
+   naar de gebruiker zonder onnodige communicatie met de domeinlaag. Zie `// TODO`.
+
+### Voorbeeld uitvoer
+
+```
+HOGENT Bestellingen printers, scanner en laptops
+
+BESTELLINGEN
+============
+1. Nieuwe bestelling plaatsen
+2. Overzicht bestellingen tonen
+3. Stoppen
+Geef je keuze (1 - 3) > 1
+
+Geef aantal printers > 4
+Geef aantal laptops > 2
+Geef aantal scanners > 3
+🔴 Bestelling kon niet geplaatst worden: bestelling moet minstens 1 en mag maximaal 8 artikelen bevatten.
+Geef de gegevens voor de bestelling opnieuw in
+
+Geef aantal printers > 66
+🔴 Voer een waarde in tussen 0 en 4.
+
+Geef aantal printers > abc
+🔴 Dit is geen geldig geheel getal. Probeer opnieuw.
+
+Geef aantal printers > 4
+Geef aantal laptops > 0
+Geef aantal scanners > 1
+✅ Je bestelling werd succesvol geplaatst...
+
+BESTELLINGEN
+============
+1. Nieuwe bestelling plaatsen
+2. Overzicht bestellingen tonen
+3. Stoppen
+Geef je keuze (1 - 3) > 2
+
+- Bestelling voor 4 printers, 0 laptops en 1 scanner.
+
+
+BESTELLINGEN
+============
+1. Nieuwe bestelling plaatsen
+2. Overzicht bestellingen tonen
+3. Stoppen
+Geef je keuze (1 - 3) > 3
+
+Tot een volgende keer...
+```

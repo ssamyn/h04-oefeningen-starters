@@ -1,6 +1,5 @@
 package domein;
 
-
 import persistentie.VertoonbaarMapper;
 
 import java.util.List;

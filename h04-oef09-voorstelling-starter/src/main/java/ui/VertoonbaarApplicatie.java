@@ -1,28 +1,33 @@
 package ui;
 
 import domein.DomeinController;
+import domein.Film;
 import util.Actie;
 
-import java.util.Scanner;
-
 public class VertoonbaarApplicatie {
+
     private final DomeinController dc;
-    private final Scanner invoer = new Scanner(System.in);
+    private final Menu overzichtsMenu, toevoegenMenu, zaalMenu;
 
     public VertoonbaarApplicatie(DomeinController dc) {
         this.dc = dc;
+        overzichtsMenu = new Menu(Actie.OVERZICHT.getTitel(), Actie.OVERZICHT.getKeuzes());
+        toevoegenMenu = new Menu(Actie.TOEVOEGEN.getTitel(), Actie.TOEVOEGEN.getKeuzes());
+        zaalMenu = new Menu(Actie.ZAAL.getTitel(), Actie.ZAAL.getKeuzes());
     }
 
     public void start() {
-        int keuze = geefKeuze(Actie.OVERZICHT);
+        System.out.println("HOGENT Films en concerten\n");
+        int keuze = overzichtsMenu.geefKeuzeUitMenu();
         while (keuze != 4) {
             switch (keuze) {
                 case 1 -> drukOverzichtVoorstellingenAf();
                 case 2 -> voegVoorstellingToe();
                 case 3 -> toonAantalVoorstellingenInZaal();
             }
-            keuze = geefKeuze(Actie.OVERZICHT);
+            keuze = overzichtsMenu.geefKeuzeUitMenu();
         }
+        System.out.println("Tot een volgende keer...");
     }
 
     private void drukOverzichtVoorstellingenAf() {
@@ -33,47 +38,38 @@ public class VertoonbaarApplicatie {
     }
 
     private void voegVoorstellingToe() {
-        String[] gegevens;
-        int keuze = geefKeuze(Actie.TOEVOEGEN);
+        int keuze = toevoegenMenu.geefKeuzeUitMenu();
         switch (keuze) {
-            case 1 -> gegevens = geefGegevensVanFilm();
-            case 2 -> gegevens = geefGegevensVanConcert();
-            default -> {
-                return;
-            }
+            case 1 -> voegFilmToe();
+            case 2 -> voegConcertToe();
         }
-
-        dc.voegVoorstellingToe(gegevens);
-        System.out.println("Voorstelling toegevoegd...\n");
-
     }
 
-    private String[] geefGegevensVanFilm() {
-        System.out.print("Geef de naam van de film: ");
-        String naam = invoer.nextLine();
-        System.out.print("Geef het jaar waarin de film uitkwam: ");
-        String jaar = invoer.nextLine();
-        System.out.print("Hoeveel sterren verdient deze film: ");
-        String sterren = invoer.nextLine();
-        return new String[]{naam, sterren, jaar};
+    private void voegFilmToe() {
+        String naam = IO.geefEenNietLegeString("Geef de naam van de film");
+        int jaar = IO.geefGeheelGetal(String.format("Geef het jaar waarin de film uitkwam (%d - %d)", Film.MIN_JAAR, Film.HUIDIG_JAAR),
+                Film.MIN_JAAR, Film.HUIDIG_JAAR);
+        int sterren = IO.geefGeheelGetal(String.format("Geef het aantal sterren dat de film verdient (%d - %d)", Film.MIN_STERREN, Film.MAX_STERREN),
+                Film.MIN_STERREN, Film.MAX_STERREN);
+        
+        dc.voegVoorstellingToe(naam, jaar, sterren);
+        System.out.println("✅ Film werd succesvol toegevoegd.\n\n");
     }
 
-    private String[] geefGegevensVanConcert() {
-        System.out.print("Geef de naam van de artiest: ");
-        String artiest = invoer.nextLine();
-        System.out.print("Geef de benaming van het concert: ");
-        String naam = invoer.nextLine();
-        return new String[]{artiest, naam};
+    private void voegConcertToe() {
+        String artiest = IO.geefEenNietLegeString("Geef de naam van de artiest");
+        String naam = IO.geefEenNietLegeString("Geef de benaming van het concert");
+
+        dc.voegVoorstellingToe(artiest, naam);
+        System.out.println("✅ Concert werd succesvol toegevoegd.\n\n");
+
     }
 
     private void toonAantalVoorstellingenInZaal() {
-        int keuze = geefKeuze(Actie.ZAAL);
+        int keuze = zaalMenu.geefKeuzeUitMenu();
         if (keuze != Actie.ZAAL.getKeuzes().length)
             System.out.printf("Het aantal voorstellingen in deze zaal bedraagt %d%n%n",
                     dc.geefAantalInZaal(keuze));
     }
 
-    private int geefKeuze(Actie actie) {
-        return Menu.geefKeuzeUitMenu(actie.getTitel(), actie.getKeuzes());
-    }
 }

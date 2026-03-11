@@ -1,7 +1,10 @@
 # Oef 09 - Voorstelling
 
+## Robuuste applicatie om voorstellingen zoals films en concertregistraties te beheren
+
 In het hoofdstuk over polymorfisme maakten jullie reeds kennis met de applicatie om voorstellingen te bekijken en toe te
-voegen. We gaan nu deze applicatie volledig robuut maken. Open het project **h04-oef09-voorstelling-starter** en volg de
+voegen. We gaan nu deze applicatie volledig robuust maken. Open het project **h04-oef09-voorstelling-starter** en volg
+de
 richtlijnen.
 
 ### Klasse `LegeStringException` toevoegen
@@ -9,10 +12,9 @@ richtlijnen.
 * Voeg in een package `exceptions` een klasse `LegeStringException` toe.
   Deze exception klasse erft van `Exception`.
 * Zorg ervoor dat een `LegeStringException` kan geworpen worden met als
-  standaardboodschap "Alle velden zijn verplicht!",
-  maar ook met een zelf gekozen foutboodschap.
+  standaardboodschap "Alle velden zijn verplicht!", maar ook met een zelf gekozen foutboodschap.
 
-### Aanpassingen in het domein en de testklassen
+### Domein-laag en de testklassen
 
 #### `Film`
 
@@ -40,23 +42,23 @@ richtlijnen.
 
 Alle unit testen zouden nu moeten slagen.
 
-### Aanpassingen in de applicatieklasse `VertoonbaarApplicatie`
+### De ui-laag, de klasse `VertoonbaarApplicatie`
 
-* zet in de methode `voegVoorstellingToe` de volgende twee lijntjes code in een `try`-blok:
+* zet in de methode `voegFilmToe` en `voegConcertToe` de volgende twee lijntjes code in een `try`-blok:
 
 ```
-    dc.voegVoorstellingToe(gegevens);
-    System.out.println("Voorstelling toegevoegd...");
+    dc.voegVoorstellingToe(...);
+    System.out.println("... werd succesvol toegevoegd.");
 ```
 
-* maak geschikte catch-blokken om de exceptions uit het domein op te vangen, dit zijn `NumberFormatException`,
-  `LegeStringException` en `IllegalArgumentException`. Voeg ook een all-catch (`Exception`) toe. Zorg voor duidelijke
-  foutboodschappen waarbij je eventueel gebruik maakt van de _message_ die in het exception-object zit.
+* maak geschikte catch-blokken om de exceptions uit het domein op te vangen, dit zijn
+  `LegeStringException` en `IllegalArgumentException`. Je mag deze op eenzelfde manier afhandelen.
+  Maak daartoe een catch blok die beide types van exceptions opvangt.
 
 ### Aanpassingen in `StartUp`
 
 * zet de code uit de main methode in een try-blok
-* zet een all-catcher die aangeeft dat het programma stopt omdat de data uit de database corrupt is
+* zet een _**all-catcher**_ die aangeeft dat het programma stopt omdat de data uit de database corrupt is
 * haal selectief één lijntje commentaar in de `VertoonbaarMapper` uit commentaar en kijk of je programma gepast reageert
     * de commentaarlijntjes simuleren corrupte data uit de databank
 

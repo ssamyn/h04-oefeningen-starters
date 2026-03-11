@@ -1,13 +1,14 @@
-# Opgave 06 Voorwerpen
+# Opgave 06 Interface Draagbaar
 
-# Oefening: Voorwerp (robuuste Applicatie)
+# Oefening: Robuuste applicatie bouwen voor Gebouwen en Voorwerpen
 
 > **Let op:** We werken verder op de oefening *Voorwerp* uit het hoofdstuk "Polymorfisme en interfaces".
-> Gebruik het startproject `h04-oef06-voorwerp-starter`.
+> Gebruik het startproject `h04-oef06-draagbaar-starter`.
 
-In de domeinklassen `Voorwerp`, `Wapen`, `Sleutel` en `Gebouw` zijn de nodige exceptions reeds toegevoegd. De focus van
-deze opdracht ligt op het bouwen van een robuuste gebruikersinterface die alle mogelijke foutmeldingen (zoals ongeldige
-invoer of domein-fouten) correct en uniform afhandelt.
+De focus van
+deze opdracht ligt op het bouwen van een **robuuste gebruikersinterface** die alle mogelijke foutmeldingen — zowel
+ongeldige invoer of domein-fouten — **correct en uniform** afhandelt en zorgt voor een **gebruiksvriendelijke**
+ervaring.
 
 ---
 
@@ -15,86 +16,85 @@ invoer of domein-fouten) correct en uniform afhandelt.
 
 De applicatie is onderverdeeld in twee lagen om de robuustheid te garanderen:
 
-1. **De UI-laag (`VoorwerpApplicatie` & `Menu`)**
+### **De domein-laag.**
 
-   1.1. **`Menu`**: Verantwoordelijk voor de validatie van de menukeuze. Het systeem blijft om invoer vragen tot de
+In de domeinklassen `Voorwerp`, `Wapen`, `Sleutel` en `Gebouw` zijn de domeinregels geïmplementeerd.
+In de setters en de controleermethodes worden `IllegalArgumentException`-s geworpen indien de domeinregels worden
+overtreden.
+Dit garandeert dat onze objecten zich steeds in een geldige toestand zullen bevinden.
+
+### **De ui-laag (`DraagbaarApplicatie` & `Menu`)**
+
+In de `IO` klasse zit de scanner gecentraliseerd. Deze ene scanner `INVOER` kan in alle user interface klassen gebruikt
+worden.
+De checks op geldige invoer zitten daar ook in hulpmethodes gecentraliseerd. In de applicatieklassen, zoals de
+`DraagbaarApplicatie` kan je nu focussen op de applicatie logica.
+
+_Merk op: als je de `IO` klasse gebruikt mag je voor de invoer van decimale getallen zowel de
+decimale punt als de decimale komma gebruiken. De code kan met beide overweg._
+
+1. **`Menu`**: Verantwoordelijk voor de validatie van de menukeuze. Het systeem blijft om invoer vragen tot de
    gebruiker een geldig cijfer binnen het bereik heeft ingevoerd. Pas de methode `geefKeuzeUitMenu` aan.
 
-   1.2. **`VoorwerpApplicatie`**: Handelt de specifieke invoer per type (Wapen, Sleutel, Gebouw) af. Bij een foutieve
-   waarde voor een attribuut worden **alle** vragen voor dat specifieke item opnieuw gesteld. Pas de methodes
-   `vraagNaam` en `start` aan.
+2. **`DraagbaarApplicatie`**: Handelt de specifieke invoer per type (Wapen, Sleutel, Gebouw) af. Pas de methodes
+   `voegWapenToe` en `voegSleutelToe` aan. Maak gebruik van de hulpmethodes uit de klasse `IO`. Je kan je baseren op het
+   voorbeeld `voegGebouwToe` dat reeds werd uitgewerkt. Merk op hoe in deze methodes nu ook de
+   `IllegalArgumentException`s,
+   die mogelijk in het domein worden geworpen, worden afgehandeld.
 
-2. **De Domein-laag (`Voorwerp` en subklassen)**
-
-   2.1. **Validatie**: De domeinklassen werpen exceptions zodra er logische fouten optreden (bijv. een negatief gewicht
-   of een ongeldige sterkte). Dit werd reeds geïmplementeerd en garandeert de integriteit van onze objecten:
-
-   2.2. **Integriteit**: Zorgt dat de objecten altijd in een geldige staat verkeren, ongeacht de aansturing
-   vanuit de UI.
-
-## Voorbeeld uitvoer Menu
+## Voorbeeld menu
 
 ```
-HOGENT VOORWERPEN
+Applicatie interface 'Draagbaar'
 
-MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
 4. Toon huidig overzicht
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  abc
-[!] Ongeldige keuze, voer een getal in
+🔴 Ongeldige keuze, voer een getal in.
 
-MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
 4. Toon huidig overzicht
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  88
-[!] Ongeldige keuze. Kies een optie tussen 1 en 5
+🔴 Ongeldige keuze. Kies een optie tussen 1 en 5.
 
-.MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
 4. Toon huidig overzicht
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  -1
-[!] Ongeldige keuze. Kies een optie tussen 1 en 5
+🔴 Ongeldige keuze. Kies een optie tussen 1 en 5.
 
-.MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
 4. Toon huidig overzicht
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  
-[!] Ongeldige keuze, voer een getal in
-
-MENU
-====
-1. Voeg wapen toe
-2. Voeg sleutel toe
-3. Voeg gebouw toe
-4. Toon huidig overzicht
-5. Beëindig deze applicatie
-Geef je keuze (1 - 5) >  1 2 3
-[!] Ongeldige keuze, voer een getal in
+🔴 Ongeldige keuze, voer een getal in.
 ```
 
-## Voorbeeld uitvoer toevoegen voorwerp
+## Voorbeeld toevoegen wapen en gebouw
 
 ```
-HOGENT VOORWERPEN
+Applicatie interface 'Draagbaar'
 
-MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
@@ -102,25 +102,33 @@ MENU
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  1
 
-Geef de naam op: Magisch zwaard
-[!] Ongeldige invoer: naam mag geen spaties bevatten..
+Geef de naam > Magisch zwaard
+🔴 De naam mag geen spaties bevatten.
 
-Geef de naam op: MagischZwaard
-Geef het gewicht: -100
-Geef het niveau: 5
-Geef de kracht: 4
-Werd het wapen reeds gebruikt (true/false)? ja
-[!] Ongeldige invoer: gewicht moet groter of gelijk aan 0 en minder dan 1000 kg zijn.
+Geef de naam > MagischZwaard
+Geef het gewicht > -100
+🔴 Voer een waarde in tussen 0,00 en 999,00.
 
-Geef de naam op: MagischZwaard
-Geef het gewicht: 0.5
-Geef het niveau: 4
-Geef de kracht: 2
-Werd het wapen reeds gebruikt (true/false)? alles behalve letterlijk true zal false opleveren
+Geef het gewicht > 0,854
+Geef het niveau > abc
+🔴 Dit is geen geldig geheel getal. Probeer opnieuw.
 
+Geef het niveau > 66
+🔴 Voer een waarde in tussen 1 en 5.
 
-MENU
-====
+Geef het niveau > 3
+Geef de kracht > -6
+🔴 Voer een positieve waarde in.
+
+Geef de kracht > 32
+Werd het wapen reeds gebruikt [ja/nee] > soms
+🔴 Je moet antwoorden met 'ja' of 'nee'.
+
+Werd het wapen reeds gebruikt [ja/nee] > JA
+✅ Wapen succesvol toegevoegd
+
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
@@ -128,14 +136,11 @@ MENU
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  4
 
-Draagbaar: Wapen 'MagischZwaard' met gewicht 0,500 kg uit niveau 4 en met kracht 2 nog niet gebruikt.
-```
+Draagbaar: Wapen 'MagischZwaard' met gewicht 0,854 kg uit niveau 3 en met kracht 32 al gebruikt.
 
-```
-HOGENT VOORWERPEN
 
-MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
@@ -143,16 +148,15 @@ MENU
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  3
 
-Geef de naam op: MagicTower
-Geef de hoogte: -10
-[!] Ongeldige invoer: de hoogte moet minstens 3m zijn!.
+Geef de naam > VervallenSchuur
+Geef de hoogte > 2.5
+🔴 Voer een waarde in die minstens 3,00 is.
 
-Geef de naam op: MagicTower
-Geef de hoogte: 55
+Geef de hoogte > 3.0
+✅ Gebouw succesvol toegevoegd
 
-
-MENU
-====
+Gebouwen en voorwerpen
+======================
 1. Voeg wapen toe
 2. Voeg sleutel toe
 3. Voeg gebouw toe
@@ -160,5 +164,6 @@ MENU
 5. Beëindig deze applicatie
 Geef je keuze (1 - 5) >  4
 
-Niet draagbaar: Gebouw 'MagicTower' met hoogte 55,0.
+Draagbaar: Wapen 'MagischZwaard' met gewicht 0,854 kg uit niveau 3 en met kracht 32 al gebruikt.
+Niet draagbaar: Gebouw 'VervallenSchuur' met hoogte 3,0.
 ```
